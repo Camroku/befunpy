@@ -21,7 +21,8 @@ settings = [
 
 stack = [0]
 
-def newpos(settings):
+def newpos():
+    global settings
     if settings[2] == 0:
         settings[3] += 1
         if settings[3] == settings[0]:
@@ -36,10 +37,19 @@ def newpos(settings):
             settings[3] = settings[0] - 1
     elif settings[2] == 3:
         settings[4] -= 1
-        if settings[4] == 0:
-            settings[4] = settings[1]
-    return settings
+        if settings[4] == -1:
+            settings[4] = settings[1] - 1
 
+def pop():
+    global stack
+    if len(stack) == 0:
+        return 0
+    else:
+        return stack.pop()
+
+def push(num):
+    global stack
+    stack.append(num)
 
 for line in file:
     len_ = len(line)
@@ -60,8 +70,7 @@ for line in range(len(file)):
 running = True
 
 while running:
-    char = program[settings[4]]
-    char = char[settings[3]]
+    char = program[settings[4]][settings[3]]
     if char == '>':
         settings[2] = 0
     elif char == 'v':
@@ -71,114 +80,96 @@ while running:
     elif char == '^':
         settings[2] = 3
     elif char == '"':
-        settings = newpos(settings)
-        char = program[settings[4]]
-        char = char[settings[3]]
+        newpos()
+        char = program[settings[4]][settings[3]]
         while char != '"':
-            stack.append(ord(char))
-            settings = newpos(settings)
-            char = program[settings[4]]
-            char = char[settings[3]]
+            push(ord(char))
+            newpos()
+            char = program[settings[4]][settings[3]]
     elif char == ':':
-        stack.append(stack[-1])
+        push(stack[-1] if len(stack) > 0 else 0)
     elif char == '_':
-        if stack.pop() == 0:
+        if pop() == 0:
             settings[2] = 0
         else:
             settings[2] = 2
     elif char == ',':
-        print(chr(stack.pop()), end="", flush=True)
+        print(chr(pop()), end="", flush=True)
     elif char == '@':
         exit()
-    elif char == '1':
-        stack.append(1)
-    elif char == '2':
-        stack.append(2)
-    elif char == '3':
-        stack.append(3)
-    elif char == '4':
-        stack.append(4)
-    elif char == '5':
-        stack.append(5)
-    elif char == '6':
-        stack.append(6)
-    elif char == '7':
-        stack.append(7)
-    elif char == '8':
-        stack.append(8)
-    elif char == '9':
-        stack.append(9)
-    elif char == '0':
-        stack.append(0)
+    elif char in '1234567890':
+        push(int(char))
     elif char == '+':
-        a = stack.pop()
-        b = stack.pop()
-        stack.append(a + b)
+        a = pop()
+        b = pop()
+        push(a + b)
     elif char == '-':
-        a = stack.pop()
-        b = stack.pop()
-        stack.append(b - a)
+        a = pop()
+        b = pop()
+        push(b - a)
     elif char == '*':
-        a = stack.pop()
-        b = stack.pop()
-        stack.append(a * b)
+        a = pop()
+        b = pop()
+        push(a * b)
     elif char == '/':
-        a = stack.pop()
-        b = stack.pop()
-        stack.append(b / a)
+        a = pop()
+        b = pop()
+        push(b / a)
     elif char == '%':
-        a = stack.pop()
-        b = stack.pop()
-        stack.append(b % a)
+        a = pop()
+        b = pop()
+        push(b % a)
     elif char == '!':
-        last = stack.pop()
+        last = pop()
         if last == 0:
             last = 1
         else:
             last = 0
-        stack.append(last)
+        push(last)
     elif char == '`':
-        a = stack.pop()
-        b = stack.pop()
+        a = pop()
+        b = pop()
         if b > a:
             last = 1
         else:
             last = 0
-        stack.append(last)
+        push(last)
     elif char == '|':
-        last = stack.pop()
+        last = pop()
         if last == 0:
             settings[2] = 1
         else:
             settings[2] = 3
     elif char == '\\':
-        a = stack.pop()
-        b = stack.pop()
-        stack.append(a)
-        stack.append(b)
+        a = pop()
+        b = pop()
+        push(a)
+        push(b)
     elif char == '$':
-        stack.pop()
+        pop()
     elif char == '.':
-        print(stack.pop(), end="", flush=True)
+        print(pop(), end="", flush=True)
     elif char == '#':
-        settings = newpos(settings)
+        newpos()
     elif char == 'g':
-        y = stack.pop()
-        x = stack.pop()
+        y = pop()
+        x = pop()
         if x >= settings[0] or y >= settings[1] or x < 0 or y < 0:
             last = 0
         else:
             getline = program[y]
             last = ord(getline[x])
-        stack.append(last)
+        push(last)
     elif char == 'p':
-        y = stack.pop()
-        x = stack.pop()
-        v = stack.pop()
+        y = pop()
+        x = pop()
+        v = pop()
         if x < settings[0] or y < settings[1] or x >= 0 or y >= 0:
             getline = program[y]
             getline[x] = v
             program[y] = getline
     elif char == '?':
         settings[2] = random.int(0, 3)
-    settings = newpos(settings)
+    elif char == '&':
+        push(int(input()))
+    newpos()
