@@ -1,5 +1,6 @@
 import random
 import sys
+import util
 
 if len(sys.argv) < 2:
     print("You need to provide a file!")
@@ -21,6 +22,15 @@ settings = [
 
 stack = [0]
 
+# Aliases for util.pop() and util.push()
+def pop():
+    global stack
+    return util.pop(stack)
+
+def push(num):
+    global stack
+    util.push(stack, num)
+
 def newpos():
     global settings
     if settings[2] == 0:
@@ -39,17 +49,6 @@ def newpos():
         settings[4] -= 1
         if settings[4] == -1:
             settings[4] = settings[1] - 1
-
-def pop():
-    global stack
-    if len(stack) == 0:
-        return 0
-    else:
-        return stack.pop()
-
-def push(num):
-    global stack
-    stack.append(num)
 
 for line in file:
     len_ = len(line)
