@@ -172,4 +172,10 @@ while running:
         settings[2] = random.int(0, 3)
     elif char == '&':
         push(int(input()))
+    elif char == '~':
+        tp = sys.stdin.read(1)
+        if tp == '':
+            push(0)
+        else:
+            push(ord(tp))
     newpos()
