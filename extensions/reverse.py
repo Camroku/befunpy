@@ -1,4 +1,6 @@
 # Reverse Extension
+import util
+
 
 def rtz(settings, program, stack):
     """
@@ -7,15 +9,15 @@ def rtz(settings, program, stack):
     torev = []
     val = -1
     while True:
-        val = stack.pop()
+        val = util.pop(stack)
         if val != 0:
-            torev.append(val)
+            util.push(torev, val)
         else:
             break
 
-    stack.append(0)
+    util.push(stack, 0)
     for val in torev:
-        stack.append(val)
+        util.push(stack, val)
     return (settings, program, stack)
 
 

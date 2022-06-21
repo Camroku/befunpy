@@ -1,11 +1,14 @@
-v Extension Test
-v This example program uses the
-v Reverse extension to print a text.
-v
-v Note: Normally you should push a 0
-v before pushing a list to reverse,
-v but we'll not do that since BefunPY
-v does that for us when starting the
-v program.
-> "Hello, World!"52*;>:v
-                     ^,_@
+"BefunPY Calculator"n:;v
+>:#,_# v#              >,
+   v<<<<<<<<<<<<<<<<<<<<<<<
+   >"+1 -2 *3 /4"n;>:#v_v ,
+                   ^ ,< v ,
+v                       >#:
+>&:1-v                    n
+    v_$&&+.$>>>>>>>>>>>>>>^
+    >:2-v                 ^
+       v_$&&-.$>>>>>>>>>>>^
+       >:3-v              ^
+          v_$&&*.$>>>>>>>>^
+          >:4-v           ^
+             @_$&&/.$>>>>>^

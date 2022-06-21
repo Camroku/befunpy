@@ -18,3 +18,4 @@ extsi = Extensions()
 
 # Import extensions here
 extsi.registerext("reverse")
+extsi.registerext("newline")
