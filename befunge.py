@@ -1,6 +1,6 @@
 # region Init
 import builtin_ints
-import random
+import exts
 import sys
 import util
 
@@ -77,6 +77,8 @@ class Program:
 prog = Program(program, settings)
 # Load built-ins
 builtin_ints.register(prog.register, prog.reglist)
+# Load extensions
+exts.extsi.registerall(prog.register, prog.reglist)
 
 # Finally, run.
 prog.run()
