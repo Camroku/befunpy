@@ -193,6 +193,10 @@ def bp_gch(settings, program, stack):
     return (settings, program, stack)
 
 
+def bp_ssp(settings, program, stack):
+    return (settings, program, stack)
+
+
 def register(regfunc, reglist):
     regfunc('>', bp_right)
     regfunc('v', bp_down)
@@ -221,4 +225,5 @@ def register(regfunc, reglist):
     regfunc('?', bp_rnd)
     regfunc('&', bp_gin)
     regfunc('~', bp_gch)
+    reglist(['\t', '\n', '\v', '\f', '\r', ' '], bp_ssp)
 # endregion
