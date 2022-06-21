@@ -193,7 +193,7 @@ def bp_gch(settings, program, stack):
     return (settings, program, stack)
 
 
-def bp_ssp(settings, program, stack):
+def bp_ssp(settings, program, stack, character):
     return (settings, program, stack)
 
 
