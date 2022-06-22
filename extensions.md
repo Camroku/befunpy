@@ -1,3 +1,4 @@
+# Extensions
 Extensions are the way to add features to BefunPY. This page will teach you these:
 * Creating an extension
 * Distributing your extension
